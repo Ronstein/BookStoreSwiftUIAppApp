@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var catalogViewModel = CatalogViewModel()
-    @State private var cartViewModel = CartViewModel()
     
     private var totalCartItems: Int {
             catalogViewModel.cartItems.values.reduce(0, +)
@@ -27,7 +26,7 @@ struct ContentView: View {
                     Label("Favoritos", systemImage: "heart")
                 }
 
-            CartScreen(catalogViewModel: catalogViewModel, cartViewModel: cartViewModel)
+            CartScreen(catalogViewModel: catalogViewModel)
                 .tabItem {
                     Label("Carrito", systemImage: "cart")
                 }

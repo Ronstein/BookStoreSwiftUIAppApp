@@ -3,11 +3,9 @@ import BookStoreCore
 
 struct CartScreen: View {
     @State private var catalogViewModel: CatalogViewModel
-    @State private var cartViewModel: CartViewModel
 
-    init(catalogViewModel: CatalogViewModel, cartViewModel: CartViewModel) {
+    init(catalogViewModel: CatalogViewModel) {
         self._catalogViewModel = State(initialValue: catalogViewModel)
-        self._cartViewModel = State(initialValue: cartViewModel)
     }
 
     var cartBooks: [Book] {
@@ -19,33 +17,66 @@ struct CartScreen: View {
         }
     }
 
+    var totalPrice: Decimal {
+        cartBooks.reduce(into: Decimal(0)) { total, book in
+            let quantity = Decimal(catalogViewModel.cartItems[book.id] ?? 0)
+            total += book.price * quantity
+        }
+    }
+
+    var totalPriceText: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+
+        return formatter.string(from: totalPrice as NSNumber) ?? "$0.00"
+    }
+
     var body: some View {
         NavigationStack {
             VStack {
                 if cartBooks.isEmpty {
-                    StatusView(message: "Tu carrito está vacío.", systemImage: "cart")
+                    StatusView(
+                        message: "Tu carrito está vacío.",
+                        systemImage: "cart"
+                    )
                 } else {
                     List(cartBooks) { book in
-                        HStack {
-                            VStack(alignment: .leading) {
+                        HStack(spacing: 16) {
+
+                            BookCoverView(url: book.coverImageURL)
+                                .frame(width: 60, height: 90)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                            VStack(alignment: .leading, spacing: 6) {
                                 Text(book.title)
                                     .font(.headline)
+                                    .lineLimit(2)
+
                                 Text(book.author)
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
+
                                 Text(book.formattedPrice)
+                                    .font(.subheadline)
                                     .bold()
                             }
+
                             Spacer()
-                            VStack(alignment: .trailing) {
-                                Text("Cantidad: \(catalogViewModel.cartItems[book.id] ?? 0)")
-                                Button("Eliminar") {
+
+                            VStack(spacing: 8) {
+                                Text("x\(catalogViewModel.cartItems[book.id] ?? 0)")
+                                    .font(.headline)
+
+                                Button {
                                     catalogViewModel.removeFromCart(book: book)
+                                } label: {
+                                    Image(systemName: "trash")
                                 }
                                 .buttonStyle(.bordered)
                             }
                         }
-                        .padding(.vertical, 6)
+                        .padding(.vertical, 8)
                     }
                     .listStyle(.plain)
 
@@ -54,13 +85,16 @@ struct CartScreen: View {
                             Text("Total")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
-                            Text(cartViewModel.totalPriceText(for: cartBooks))
+
+                            Text(totalPriceText)
                                 .font(.title2)
                                 .bold()
                         }
+
                         Spacer()
+
                         Button("Pagar") {
-                            // Placeholder action
+
                         }
                         .buttonStyle(.borderedProminent)
                     }
