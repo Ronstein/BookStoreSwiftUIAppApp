@@ -1,0 +1,64 @@
+//
+//  .gitignore
+//  BookStoreSwiftUIApp
+//
+//  Created by Rodrigo Ignacio on 27-05-26.
+//
+
+# Xcode
+
+DerivedData/
+
+.build/
+
+Packages/
+
+# User settings
+
+xcuserdata/
+
+*.xcuserstate
+
+# Build
+
+build/
+
+Build/
+
+# Swift Package Manager
+
+.swiftpm/
+
+# CocoaPods
+
+Pods/
+
+# Carthage
+
+Carthage/Build/
+
+# Fastlane
+
+fastlane/report.xml
+
+fastlane/Preview.html
+
+fastlane/screenshots/
+
+fastlane/test_output/
+
+# macOS
+
+.DS_Store
+
+# Ruby
+
+.bundle/
+
+# Archives
+
+*.xcarchive
+
+# Logs
+
+*.log
