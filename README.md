@@ -138,7 +138,7 @@ Los resultados se mapean a la entidad `Book` usando `OpenLibraryBook.toDomainMod
 - `description`
 - `coverImageURL`
 - `publishYear`
-- `price` simulado
+- `price`
 
 ## Persistencia local
 
