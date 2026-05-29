@@ -47,10 +47,14 @@ struct CatalogScreen: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Actualizar") {
+                    Button {
                         Task {
                             await viewModel.loadBooks()
                         }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.title2)
+                            .padding(8)
                     }
                 }
             }

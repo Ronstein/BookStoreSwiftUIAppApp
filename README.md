@@ -32,7 +32,7 @@ bundle exec fastlane build
 
 El proyecto está dividido en dos capas principales:
 
-- `BookStoreCore`
+- `BookStoreCore (XCFramework)`
   - `Models`: modelos de dominio y transformaciones desde la API.
   - `Networking`: la capa de datos remotos, con un servicio que consume OpenLibrary.
   - `Persistence`: abstrae el almacenamiento local.
@@ -148,9 +148,3 @@ Se utiliza `UserDefaults` para persistir:
 - carrito: `UserDefaultsCartStorage`
 
 Esto permite que los favoritos y la cantidad del carrito sobrevivan entre sesiones.
-
-## Notas importantes
-
-- No se encontró un `Podfile` ni un paquete de CocoaPods en el repositorio actual.
-- Tampoco se encontró un `.xcframework` precompilado en el proyecto.
-- La lógica principal está encapsulada en el módulo local `BookStoreCore`, lo que facilita su extracción futura a un XCFramework.
